@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEONVERSE — Beyond Reality</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #07070b;
+  --text: #f8f7ff;
+  --muted: #a5a2b5;
+  --cyan: #00f5ff;
+  --pink: #ff35bd;
+  --purple: #8d4bff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 20%, #8d4bff16, transparent 40%),
+    radial-gradient(ellipse at 85% 55%, #ff35bd12, transparent 38%),
+    radial-gradient(ellipse at 50% 100%, #00f5ff10, transparent 40%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.container {
+  width: min(1160px, 90%);
+  margin: auto;
+}
+
+/* NAVBAR */
+
+nav {
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff12;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: var(--cyan);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: #c6c2d4;
+  transition: color .3s;
+}
+
+.nav-links a:hover {
+  color: var(--cyan);
+}
+
+.nav-cta {
+  border: 1px solid #ffffff35;
+  padding: 11px 18px;
+  border-radius: 8px;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 690px;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  align-items: center;
+  gap: 30px;
+  padding: 65px 0 85px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border: 1px solid #ffffff1c;
+  border-radius: 30px;
+  color: #d5d0e5;
+  background: #ffffff05;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+  animation: blink 1.5s infinite;
+}
+
+h1 {
+  font-size: clamp(48px, 6.5vw, 83px);
+  line-height: .99;
+  letter-spacing: -4px;
+  font-weight: 700;
+}
+
+h1 .gradient {
+  display: block;
+  background: linear-gradient(
+    95deg,
+    var(--cyan),
+    #9c71ff 40%,
+    var(--pink) 75%,
+    #ffb44a
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 6s linear infinite;
+}
+
+.hero-copy {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+  max-width: 440px;
+  margin-top: 25px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 34px;
+}
+
+.btn {
+  padding: 15px 23px;
+  min-height: 51px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+}
+
+.btn-primary {
+  color: #07070b;
+  background: linear-gradient(100deg, var(--cyan), #a9a0ff, var(--pink));
+  background-size: 200% auto;
+  box-shadow: 0 0 25px #8d4bff30;
+  animation: gradientFlow 5s linear infinite;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 35px #ff35bd50;
+}
+
+.btn-secondary {
+  border: 1px solid #ffffff30;
+  color: white;
+  background: #ffffff06;
+}
+
+.btn-secondary:hover {
+  border-color: var(--cyan);
+}
+
+.hero-note {
+  color: #777488;
+  font-size: 11px;
+  margin-top: 22px;
+}
+
+/* ANIMATED VISUAL */
+
+.visual {
+  position: relative;
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+}
+
+.visual::before {
+  content: "";
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  background: #8d4bff30;
+  filter: blur(90px);
+  border-radius: 50%;
+}
+
+.orb-scene {
+  width: min(360px, 85vw);
+  aspect-ratio: 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  animation: float 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.orb {
+  width: 190px;
+  height: 190px;
+  position: relative;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 25%, #ffffff, transparent 9%),
+    radial-gradient(circle at 35% 30%, #a6ffff, transparent 20%),
+    radial-gradient(circle at 65% 70%, #ff35bd, transparent 38%),
+    radial-gradient(circle at 35% 65%, #5541ff, transparent 45%),
+    radial-gradient(circle at 50% 50%, #12142d, #07070b 72%);
+  box-shadow:
+    inset -15px -20px 35px #000a,
+    inset 10px 8px 30px #ffffff25,
+    0 0 35px #8d4bff80,
+    0 0 90px #ff35bd30;
+  animation: orbPulse 5s ease-in-out infinite alternate;
+}
+
+.orb::before,
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: -27px;
+  border: 1px solid #00f5ff75;
+  border-radius: 50%;
+  transform: rotateX(65deg) rotateZ(-25deg);
+  box-shadow: 0 0 15px #00f5ff15;
+}
+
+.orb::after {
+  inset: -43px;
+  border-color: #ff35bd70;
+  transform: rotateX(65deg) rotateZ(45deg);
+}
+
+.ring {
+  position: absolute;
+  inset: 17px;
+  border: 1px solid #ffffff20;
+  border-radius: 50%;
+  transform: rotateX(65deg);
+  animation: rotateRing 12s linear infinite;
+}
+
+.ring.two {
+  inset: 0;
+  transform: rotateY(65deg);
+  border-color: #8d4bff80;
+  animation-direction: reverse;
+}
+
+.spark {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 16px var(--cyan);
+}
+
+.spark.one {
+  top: 19%;
+  left: 18%;
+}
+
+.spark.two {
+  bottom: 20%;
+  right: 16%;
+  background: var(--pink);
+  box-shadow: 0 0 16px var(--pink);
+}
+
+.spark.three {
+  top: 30%;
+  right: 9%;
+  width: 4px;
+  height: 4px;
+  background: #ffb44a;
+  box-shadow: 0 0 14px #ffb44a;
+}
+
+.floating-card {
+  position: absolute;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid #ffffff20;
+  background: #111119d9;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 40px #0005;
+  font-size: 11px;
+  animation: float 5s ease-in-out infinite;
+}
+
+.floating-card strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.floating-card small {
+  color: var(--muted);
+}
+
+.card-one {
+  left: -2%;
+  top: 23%;
+}
+
+.card-two {
+  right: -2%;
+  bottom: 19%;
+  animation-delay: -2s;
+}
+
+.mini-icon {
+  display: inline-block;
+  color: var(--cyan);
+  margin-right: 5px;
+}
+
+/* MARQUEE */
+
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid #ffffff12;
+  border-bottom: 1px solid #ffffff12;
+  padding: 21px 0;
+  background: #ffffff03;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-track span {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #9a95ac;
+  padding: 0 35px;
+  white-space: nowrap;
+}
+
+.marquee-track b {
+  color: var(--pink);
+  margin-left: 65px;
+}
+
+/* SECTIONS */
+
+.section {
+  padding: 110px 0;
+}
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.kicker {
+  color: var(--cyan);
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-top: 18px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 18px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 245px;
+  padding: 30px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #15141e, #0c0c12);
+  border: 1px solid #ffffff12;
+  transition: transform .35s, border-color .35s;
+}
+
+.feature-card::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  right: -90px;
+  bottom: -100px;
+  border-radius: 50%;
+  background: var(--glow, #8d4bff);
+  filter: blur(70px);
+  opacity: .25;
+  transition: opacity .3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: #ffffff35;
+}
+
+.feature-card:hover::after {
+  opacity: .7;
+}
+
+.feature-icon {
+  width: 49px;
+  height: 49px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  border: 1px solid #ffffff20;
+  background: #ffffff08;
+  font-size: 23px;
+  margin-bottom: 28px;
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  margin-bottom: 13px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.feature-card:nth-child(1) { --glow: #00f5ff; }
+.feature-card:nth-child(2) { --glow: #ff35bd; }
+.feature-card:nth-child(3) { --glow: #8d4bff; }
+
+/* SHOWCASE */
+
+.showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 65px;
+  padding: 55px;
+  border: 1px solid #ffffff15;
+  border-radius: 24px;
+  background: linear-gradient(120deg, #15121e, #0a0a10);
+}
+
+.showcase-art {
+  min-height: 290px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 50%, #8d4bff25, transparent 50%),
+    #090910;
+  border: 1px solid #ffffff10;
+}
+
+.art-circle {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid #ff35bd80;
+  box-shadow: inset 0 0 40px #8d4bff15, 0 0 30px #ff35bd12;
+  transform: rotateX(65deg) rotateZ(25deg);
+  animation: rotateRing 14s linear infinite;
+}
+
+.art-circle.two {
+  width: 150px;
+  height: 250px;
+  border-color: #00f5ff90;
+  transform: rotateX(35deg) rotateZ(-40deg);
+  animation-direction: reverse;
+}
+
+.art-core {
+  width: 90px;
+  height: 90px;
+  border-radius: 25px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--cyan), var(--purple), var(--pink));
+  box-shadow: 0 0 45px #8d4bff70;
+  animation: float 4s ease-in-out infinite;
+}
+
+.showcase-copy h2 {
+  font-size: clamp(30px, 4vw, 43px);
+}
+
+.showcase-copy p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 22px 0;
+}
+
+/* CTA */
+
+.final-cta {
+  text-align: center;
+  padding: 95px 20px 110px;
+  border-top: 1px solid #ffffff10;
+  background: radial-gradient(ellipse at 50% 100%, #8d4bff18, transparent 60%);
+}
+
+.final-cta h2 {
+  max-width: 680px;
+  margin: 20px auto;
+}
+
+.final-cta p {
+  color: var(--muted);
+  margin: 18px auto 28px;
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 460px;
+}
+
+footer {
+  border-top: 1px solid #ffffff12;
+  padding: 27px 0;
+  color: #777488;
+  font-size: 11px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+/* REVEAL ANIMATION */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes orbPulse {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(35deg); }
+}
+
+@keyframes rotateRing {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+@keyframes gradientFlow {
+  to { background-position: 250% center; }
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes blink {
+  50% { opacity: .3; }
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+  nav { height: 72px; }
+  .logo { font-size: 19px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 11px; }
+  .nav-cta { display: none; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 70px 0 45px;
+    gap: 0;
+  }
+
+  h1 {
+    font-size: clamp(47px, 11vw, 76px);
+    letter-spacing: -2.5px;
+  }
+
+  .hero-copy { font-size: 14px; }
+
+  .visual {
+    min-height: 410px;
+    margin-top: 20px;
+  }
+
+  .orb { width: 160px; height: 160px; }
+
+  .floating-card { font-size: 10px; }
+  .card-one { left: 0; }
+  .card-two { right: 0; }
+
+  .section { padding: 75px 0; }
+  .cards { grid-template-columns: 1fr; gap: 15px; }
+
+  .feature-card { min-height: 210px; }
+
+  .showcase {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 30px;
+  }
+
+  .showcase-art { min-height: 250px; }
+  .showcase-copy { padding: 5px; }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav-links { gap: 10px; }
+  .nav-links a { font-size: 10px; }
+  .actions { gap: 10px; }
+  .btn { padding: 13px 16px; font-size: 12px; }
+  .visual { min-height: 350px; }
+  .orb { width: 135px; height: 135px; }
+  .floating-card { padding: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="container">
+  <nav>
+    <a class="logo" href="#home">NEON<span>VERSE</span></a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#showcase">Experience</a>
+    </div>
+
+    <a class="nav-cta" href="#explore">Discover ↗</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero container" id="home">
+
+    <div class="hero-content">
+      <div class="eyebrow">
+        <span class="dot"></span>
+        A NEW DIGITAL DIMENSION
+      </div>
+
+      <h1>
+        ENTER THE
+        <span class="gradient">EXTRAORDINARY.</span>
+      </h1>
+
+      <p class="hero-copy">
+        Step into a world where imagination meets technology.
+        Discover immersive visuals, fluid motion, and experiences
+        designed to push beyond the ordinary.
+      </p>
+
+      <div class="actions">
+        <a href="#features" class="btn btn-primary">
+          Explore Experience <span>↗</span>
+        </a>
+
+        <a href="#showcase" class="btn btn-secondary">
+          Discover More <span>↓</span>
+        </a>
+      </div>
+
+      <p class="hero-note">
+        ✦ &nbsp; DESIGNED FOR THE NEXT GENERATION OF THE WEB
+      </p>
+    </div>
+
+    <div class="visual">
+      <div class="orb-scene">
+        <div class="ring"></div>
+        <div class="ring two"></div>
+        <div class="orb"></div>
+
+        <span class="spark one"></span>
+        <span class="spark two"></span>
+        <span class="spark three"></span>
+      </div>
+
+      <div class="floating-card card-one">
+        <strong><span class="mini-icon">✦</span> Beyond Limits</strong>
+        <small>Creativity without boundaries</small>
+      </div>
+
+      <div class="floating-card card-two">
+        <strong>∞ &nbsp; Infinite Ideas</strong>
+        <small>Imagine. Create. Explore.</small>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>CREATIVITY <b>✳</b></span>
+      <span>IMMERSION <b>✳</b></span>
+      <span>IMAGINATION <b>✳</b></span>
+      <span>INNOVATION <b>✳</b></span>
+      <span>EXPERIENCE <b>✳</b></span>
+      <span>CREATIVITY <b>✳</b></span>
+      <span>IMMERSION <b>✳</b></span>
+      <span>IMAGINATION <b>✳</b></span>
+      <span>INNOVATION <b>✳</b></span>
+      <span>EXPERIENCE <b>✳</b></span>
+    </div>
+  </div>
+
+  <section class="section container" id="features">
+    <div class="section-heading reveal">
+      <span class="kicker">THE EXPERIENCE</span>
+      <h2>Not just a website.<br>A whole new feeling.</h2>
+      <p>
+        Every detail is crafted to turn a simple digital visit
+        into an experience worth remembering.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <article class="feature-card reveal">
+        <div class="feature-icon">✧</div>
+        <h3>Fluid Motion</h3>
+        <p>
+          Smooth transitions, floating elements, and motion
+          that makes every interaction feel alive.
+        </p>
+      </article>
+
+      <article class="feature-card reveal">
+        <div class="feature-icon">◈</div>
+        <h3>Neon Universe</h3>
+        <p>
+          A vivid world of gradients, luminous colours,
+          atmospheric lighting, and futuristic visuals.
+        </p>
+      </article>
+
+      <article class="feature-card reveal">
+        <div class="feature-icon">⟡</div>
+        <h3>Beyond Ordinary</h3>
+        <p>
+          A modern, responsive experience designed to feel
+          spacious, immersive, and effortlessly premium.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section container" id="showcase">
+    <div class="showcase reveal">
+
+      <div class="showcase-art">
+        <div class="art-circle"></div>
+        <div class="art-circle two"></div>
+        <div class="art-core"></div>
+      </div>
+
+      <div class="showcase-copy">
+        <span class="kicker">REIMAGINE EVERYTHING</span>
+        <h2>Reality is only the beginning.</h2>
+
+        <p>
+          Explore a different side of the digital world.
+          Bold visuals, vibrant light, and carefully crafted
+          motion come together in one immersive experience.
+        </p>
+
+        <a href="#explore" class="btn btn-secondary">
+          Enter the Universe ↗
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="final-cta" id="explore">
+    <div class="container reveal">
+      <span class="kicker">YOUR NEXT ADVENTURE STARTS HERE</span>
+
+      <h2>
+        Ready to explore
+        <span class="gradient">the unknown?</span>
+      </h2>
+
+      <p>
+        The future belongs to those who imagine it.
+        Take the first step into something extraordinary.
+      </p>
+
+      <a href="#home" class="btn btn-primary">
+        Back to the Beginning ↑
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a class="logo" href="#home">NEON<span>VERSE</span></a>
+    <span>© 2026 NEONVERSE. A creative demo project.</span>
+    <span>MADE FOR THE FUTURE ✦</span>
+  </div>
+</footer>
+
+<script>
+// Reveal sections smoothly when they enter the screen.
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+
+document.querySelectorAll(".reveal").forEach((element) => {
+  revealObserver.observe(element);
+});
+
+// Subtle 3D movement on the hero orb for pointer devices.
+const visual = document.querySelector(".visual");
+const orbScene = document.querySelector(".orb-scene");
+
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  visual.addEventListener("pointermove", (event) => {
+    const rect = visual.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    orbScene.style.transform =
+      `rotateY(${x * 16}deg) rotateX(${-y * 16}deg)`;
+  });
+
+  visual.addEventListener("pointerleave", () => {
+    orbScene.style.transform = "";
+  });
+}
+</script>
+
+</body>
+</html>
