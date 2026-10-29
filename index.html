@@ -24,16 +24,16 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* ============ STAGE (holds all pages side-by-side) ============ */
+  /* ============ STAGE ============ */
   .stage {
     position: fixed;
     inset: 0;
     overflow: hidden;
   }
 
-  /* Each page is a full-screen slide */
   .slide {
     position: absolute;
     inset: 0;
@@ -49,7 +49,6 @@
   .slide.left   { transform: translateX(-100%); }
   .slide.right  { transform: translateX(100%); }
 
-  /* Each slide owns its own background (slides WITH the page) */
   .slide-bg {
     position: absolute;
     inset: 0;
@@ -61,7 +60,6 @@
     100% { transform: scale(1.15) translate(-2%, 2%); }
   }
 
-  /* Different mood per slide */
   #slide-home .slide-bg {
     background:
       radial-gradient(circle at 20% 20%, rgba(0,229,255,0.18), transparent 45%),
@@ -84,7 +82,7 @@
       #0a0110;
   }
 
-  /* ============ NAVBAR (fixed, stays above slides) ============ */
+  /* ============ NAVBAR ============ */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -120,7 +118,17 @@
     transition: color 0.3s;
     cursor: pointer;
     user-select: none;
+    position: relative;
   }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--pink));
+    transition: width 0.35s ease;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
   .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
   .nav-cta {
     padding: 8px 16px;
@@ -131,19 +139,20 @@
     font-size: 0.88rem;
     cursor: pointer;
     transition: all 0.3s;
+    font-family: inherit;
   }
   .nav-cta:hover {
     background: var(--purple);
     box-shadow: 0 0 20px var(--purple);
   }
 
-  /* ============ CONTENT (offset for navbar) ============ */
+  /* ============ CONTENT ============ */
   .content {
     padding: 100px 6vw 60px;
     min-height: 100%;
   }
 
-  /* ============ HERO (home slide) ============ */
+  /* ============ HERO ============ */
   .hero {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
@@ -178,6 +187,8 @@
     max-width: 520px;
   }
   .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* ============ BUTTONS (magnetic + ripple) ============ */
   .btn {
     padding: 13px 24px;
     border-radius: 40px;
@@ -185,18 +196,20 @@
     font-weight: 600;
     cursor: pointer;
     border: none;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1.2), box-shadow 0.35s;
     text-decoration: none;
     display: inline-block;
     font-family: inherit;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
   }
   .btn-primary {
     background: linear-gradient(90deg, var(--cyan), var(--purple));
     color: #05010f;
   }
   .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 25px rgba(0,229,255,0.6);
+    box-shadow: 0 0 30px rgba(0,229,255,0.7), 0 0 60px rgba(168,85,247,0.4);
   }
   .btn-ghost {
     background: transparent;
@@ -205,8 +218,19 @@
   }
   .btn-ghost:hover {
     border-color: var(--pink);
-    box-shadow: 0 0 20px rgba(255,46,196,0.4);
-    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(255,46,196,0.5);
+  }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transform: scale(0);
+    animation: rippleGo 0.6s ease-out;
+    pointer-events: none;
+  }
+  @keyframes rippleGo {
+    to { transform: scale(4); opacity: 0; }
   }
 
   /* ============ HERO VISUAL ============ */
@@ -217,17 +241,40 @@
     align-items: center;
     justify-content: center;
   }
+  .orb-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: orbFloat 6s ease-in-out infinite;
+  }
+  @keyframes orbFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
   .orb {
     width: 190px;
     height: 190px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #fff, var(--cyan) 25%, var(--purple) 55%, var(--pink) 80%, transparent 100%);
-    box-shadow: 0 0 60px var(--cyan), 0 0 120px var(--purple);
+    box-shadow: 0 0 60px var(--cyan), 0 0 120px var(--purple), 0 0 200px rgba(255,46,196,0.3);
     animation: orbPulse 4s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
   }
   @keyframes orbPulse {
-    0%,100% { transform: scale(1); filter: brightness(1); }
-    50% { transform: scale(1.08); filter: brightness(1.25); }
+    0%,100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+  }
+  .orb-trail {
+    position: absolute;
+    inset: -25px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, var(--cyan), transparent, var(--pink), transparent);
+    animation: spin 5s linear infinite;
+    filter: blur(15px);
+    opacity: 0.7;
+    z-index: 1;
   }
   .ring {
     position: absolute;
@@ -255,6 +302,7 @@
     color: var(--text);
     animation: floatY 5s ease-in-out infinite;
     white-space: nowrap;
+    z-index: 3;
   }
   .fc1 { top: 12%; left: 0; }
   .fc2 { bottom: 14%; right: 0; animation-delay: 1.5s; }
@@ -285,19 +333,23 @@
     border-top: 1px solid rgba(168,85,247,0.15);
     border-bottom: 1px solid rgba(168,85,247,0.15);
     background: rgba(10, 4, 25, 0.5);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
   }
   .marquee-track {
     display: flex;
     gap: 50px;
     white-space: nowrap;
-    animation: scrollX 20s linear infinite;
+    animation: scrollX 25s linear infinite;
     font-weight: 700;
     letter-spacing: 3px;
     font-size: 0.9rem;
     color: var(--muted);
     text-transform: uppercase;
+    width: max-content;
   }
   .marquee-track span { color: var(--cyan); }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
   @keyframes scrollX {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
@@ -317,11 +369,12 @@
     margin: 0 auto 44px;
   }
 
-  /* ============ FEATURES ============ */
+  /* ============ FEATURES CARDS (3D tilt) ============ */
   .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 24px;
+    perspective: 1200px;
   }
   .card {
     padding: 30px 24px;
@@ -329,15 +382,26 @@
     background: rgba(20, 10, 40, 0.6);
     border: 1px solid rgba(168, 85, 247, 0.22);
     backdrop-filter: blur(10px);
-    transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+    transition: transform 0.25s ease, box-shadow 0.4s, border-color 0.4s;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(168,85,247,0.35), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
   }
   .card:hover {
-    transform: translateY(-6px);
     border-color: var(--cyan);
-    box-shadow: 0 20px 50px rgba(0,229,255,0.18);
+    box-shadow: 0 25px 60px rgba(0,229,255,0.22), 0 0 40px rgba(168,85,247,0.25);
   }
+  .card:hover::before { opacity: 1; }
   .card-icon {
     width: 48px; height: 48px;
     border-radius: 12px;
@@ -348,9 +412,14 @@
     background: linear-gradient(135deg, var(--cyan), var(--purple));
     color: #05010f;
     font-weight: 800;
+    transition: transform 0.4s;
   }
-  .card h3 { font-size: 1.15rem; margin-bottom: 10px; }
-  .card p { color: var(--muted); font-size: 0.92rem; }
+  .card:hover .card-icon {
+    transform: translateZ(30px) scale(1.1);
+  }
+  .card h3 { font-size: 1.15rem; margin-bottom: 10px; transition: transform 0.4s; }
+  .card p { color: var(--muted); font-size: 0.92rem; transition: transform 0.4s; }
+  .card:hover h3, .card:hover p { transform: translateZ(20px); }
 
   /* ============ SHOWCASE ============ */
   .showcase {
@@ -371,7 +440,7 @@
     width: 110px; height: 110px;
     border-radius: 24px;
     background: linear-gradient(135deg, var(--cyan), var(--purple), var(--pink));
-    box-shadow: 0 0 50px rgba(168,85,247,0.6);
+    box-shadow: 0 0 50px rgba(168,85,247,0.6), 0 0 100px rgba(0,229,255,0.35);
     animation: orbPulse 5s ease-in-out infinite;
   }
   .showcase-visual .ring { position: absolute; }
@@ -404,16 +473,19 @@
   footer .logo { font-size: 1.1rem; }
   footer p { color: var(--muted); font-size: 0.82rem; margin-top: 8px; }
 
-  /* ============ REVEAL (per slide) ============ */
+  /* ============ REVEAL ============ */
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(40px) scale(0.97);
+    transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.3, 1.2), transform 0.85s cubic-bezier(0.2, 0.8, 0.3, 1.2);
   }
   .slide.active .reveal.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
+
+  /* ============ PARALLAX ============ */
+  .parallax-slow { will-change: transform; }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px) {
@@ -434,7 +506,6 @@
 </head>
 <body>
 
-<!-- ============ NAVBAR ============ -->
 <nav>
   <div class="logo" data-nav="home">NEONVERSE</div>
   <ul class="nav-links">
@@ -445,10 +516,9 @@
   <button class="nav-cta" data-nav="features">Discover</button>
 </nav>
 
-<!-- ============ STAGE (holds all slides) ============ -->
 <div class="stage">
 
-  <!-- ============ SLIDE: HOME ============ -->
+  <!-- HOME -->
   <div class="slide active" id="slide-home">
     <div class="slide-bg"></div>
     <div class="content">
@@ -466,7 +536,10 @@
           <div class="ring ring-1"></div>
           <div class="ring ring-2"></div>
           <div class="ring ring-3"></div>
-          <div class="orb"></div>
+          <div class="orb-wrap">
+            <div class="orb-trail"></div>
+            <div class="orb"></div>
+          </div>
           <div class="float-card fc1">⚡ Real-time Motion</div>
           <div class="float-card fc2">🌌 Infinite Depth</div>
           <div class="float-card fc3">✨ Neon Energy</div>
@@ -486,24 +559,24 @@
     </div>
   </div>
 
-  <!-- ============ SLIDE: FEATURES ============ -->
+  <!-- FEATURES -->
   <div class="slide right" id="slide-features">
     <div class="slide-bg"></div>
     <div class="content">
       <h2 class="section-title reveal">Built for the <span class="gradient-text">Future</span></h2>
       <p class="section-sub reveal">Every pixel engineered to feel alive. Every motion designed to pull you deeper.</p>
       <div class="features">
-        <div class="card reveal">
+        <div class="card reveal tilt">
           <div class="card-icon">∞</div>
           <h3>Fluid Motion</h3>
           <p>Buttery-smooth animations that respond to every scroll and touch with cinematic precision.</p>
         </div>
-        <div class="card reveal">
+        <div class="card reveal tilt">
           <div class="card-icon">◉</div>
           <h3>Neon Universe</h3>
           <p>Layered neon gradients and glowing depth that make the screen feel infinite.</p>
         </div>
-        <div class="card reveal">
+        <div class="card reveal tilt">
           <div class="card-icon">✦</div>
           <h3>Beyond Ordinary</h3>
           <p>A design language that breaks the rules of traditional websites and rewrites them.</p>
@@ -512,12 +585,12 @@
     </div>
   </div>
 
-  <!-- ============ SLIDE: EXPERIENCE ============ -->
+  <!-- EXPERIENCE -->
   <div class="slide right" id="slide-experience">
     <div class="slide-bg"></div>
     <div class="content">
       <div class="showcase">
-        <div class="showcase-visual reveal">
+        <div class="showcase-visual reveal parallax-slow">
           <div class="ring ring-1"></div>
           <div class="ring ring-2"></div>
           <div class="showcase-center"></div>
@@ -546,21 +619,13 @@
 </div>
 
 <script>
-  /* =====================================================
-     SLIDE PAGE TRANSITION SYSTEM
-     - Slides move fully left/right with background
-     - All buttons work via data-nav attribute
-  ===================================================== */
-
+  /* ============ SLIDE SYSTEM ============ */
   const slides = {
     home:       document.getElementById('slide-home'),
     features:   document.getElementById('slide-features'),
     experience: document.getElementById('slide-experience')
   };
-
-  // Order defines left/right direction logic
   const order = ['home', 'features', 'experience'];
-
   const navLinks = document.querySelectorAll('.nav-links a');
   let current = 'home';
   let busy = false;
@@ -576,69 +641,9 @@
     const fromSlide = slides[current];
     const toSlide = slides[target];
 
-    // Set starting position of incoming slide
-    // If going right -> new slide comes from right; if left -> from left
     toSlide.classList.remove('left', 'right', 'active');
     toSlide.classList.add(movingRight ? 'right' : 'left');
-
-    // Force reflow so the browser registers the starting position
     void toSlide.offsetWidth;
 
-    // Animate: outgoing slide leaves to the opposite side
     fromSlide.classList.remove('active');
-    fromSlide.classList.add(movingRight ? 'left' : 'right');
-
-    // Incoming slide slides into view
-    toSlide.classList.remove('left', 'right');
-    toSlide.classList.add('active');
-
-    // Scroll incoming slide to top
-    toSlide.scrollTop = 0;
-
-    // Update nav active state
-    navLinks.forEach(l => l.classList.toggle('active', l.dataset.nav === target));
-
-    // Re-trigger reveal animations in the incoming slide
-    toSlide.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
-    setTimeout(() => {
-      toSlide.querySelectorAll('.reveal').forEach((el, i) => {
-        setTimeout(() => el.classList.add('visible'), i * 70);
-      });
-    }, 400);
-
-    // Lock during transition
-    setTimeout(() => {
-      busy = false;
-      current = target;
-    }, 850);
-  }
-
-  // Bind ALL elements with data-nav (buttons, links, logo)
-  document.querySelectorAll('[data-nav]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      goTo(el.dataset.nav);
-    });
-  });
-
-  // Initial reveal on home slide
-  setTimeout(() => {
-    slides.home.querySelectorAll('.reveal').forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), i * 70);
-    });
-  }, 300);
-
-  // Reveal observer for scroll within slides
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+    fromS
