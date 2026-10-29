@@ -1,727 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEONVERSE | Futuristic Digital Experience</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-dark: #05060d;
-      --bg-card: rgba(13, 17, 33, 0.7);
-      --neon-cyan: #00f5ff;
-      --neon-purple: #9d4edd;
-      --neon-pink: #ff007f;
-      --neon-orange: #ff9100;
-      --text-main: #f0f4fc;
-      --text-muted: #8b9bb4;
-      --border-glass: rgba(255, 255, 255, 0.08);
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --font-display: 'Space Grotesk', sans-serif;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-      line-height: 1.6;
-      background-image: 
-        radial-gradient(circle at 15% 20%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(0, 245, 255, 0.12) 0%, transparent 40%);
-      background-attachment: fixed;
-    }
-
-    /* Ambient Background Glow */
-    .ambient-glow {
-      position: fixed;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-      filter: blur(140px);
-      opacity: 0.12;
-      z-index: 0;
-      pointer-events: none;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: floatGlow 12s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatGlow {
-      0% { transform: translate(-50%, -40%) scale(1); }
-      100% { transform: translate(-40%, -60%) scale(1.2); }
-    }
-
-    /* Navigation */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-glass);
-      background: rgba(5, 6, 13, 0.6);
-    }
-
-    .brand-logo {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .brand-logo::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      background: var(--neon-cyan);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--neon-cyan);
-      display: inline-block;
-    }
-
-    .nav-links {
-      display: none;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--neon-cyan);
-    }
-
-    .btn-nav {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-glass);
-      color: var(--text-main);
-      padding: 0.55rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      transition: all 0.3s;
-    }
-
-    .btn-nav:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
-    }
-
-    /* Common Layout & Container */
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Hero Section */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 7rem 1rem 4rem;
-      position: relative;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      border-radius: 50px;
-      background: rgba(0, 245, 255, 0.06);
-      border: 1px solid rgba(0, 245, 255, 0.25);
-      color: var(--neon-cyan);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: 2.4rem;
-      line-height: 1.15;
-      font-weight: 800;
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-      letter-spacing: -0.5px;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 40%, var(--neon-pink) 75%, var(--neon-orange) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: block;
-      background-size: 200% auto;
-      animation: shiftGrad 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes shiftGrad {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
-
-    .hero-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      max-width: 580px;
-      margin-bottom: 2rem;
-    }
-
-    .cta-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      width: 100%;
-      max-width: 320px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-      color: #05060d;
-      font-weight: 700;
-      padding: 0.85rem 1.8rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      box-shadow: 0 0 25px rgba(0, 245, 255, 0.4);
-      border: none;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .btn-primary:active {
-      transform: scale(0.97);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-glass);
-      color: var(--text-main);
-      padding: 0.85rem 1.8rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    /* Futuristic Cinematic Visual Stage */
-    .hero-visual {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      margin: 3.5rem auto 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .orb-glow {
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffffff, var(--neon-cyan) 40%, var(--neon-purple) 85%);
-      box-shadow: 
-        0 0 40px rgba(0, 245, 255, 0.8),
-        0 0 90px rgba(157, 78, 221, 0.5);
-      animation: orbPulse 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes orbPulse {
-      0% { transform: scale(0.92); filter: brightness(0.95); }
-      100% { transform: scale(1.08); filter: brightness(1.2); }
-    }
-
-    .ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px dashed rgba(0, 245, 255, 0.35);
-      box-sizing: border-box;
-      pointer-events: none;
-    }
-
-    .ring-1 {
-      width: 190px;
-      height: 190px;
-      border-color: rgba(0, 245, 255, 0.45);
-      animation: rotateRing 14s linear infinite;
-    }
-
-    .ring-2 {
-      width: 250px;
-      height: 250px;
-      border-color: rgba(255, 0, 127, 0.35);
-      border-style: dotted;
-      animation: rotateRingRev 18s linear infinite;
-    }
-
-    @keyframes rotateRing {
-      0% { transform: rotate(0deg) rotateX(45deg); }
-      100% { transform: rotate(360deg) rotateX(45deg); }
-    }
-
-    @keyframes rotateRingRev {
-      0% { transform: rotate(0deg) rotateY(45deg); }
-      100% { transform: rotate(-360deg) rotateY(45deg); }
-    }
-
-    .floating-card {
-      position: absolute;
-      background: rgba(13, 17, 33, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 0.5rem 0.9rem;
-      border-radius: 10px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--neon-cyan);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      animation: floatBadge 3.5s ease-in-out infinite alternate;
-    }
-
-    .card-top {
-      top: 10px;
-      right: -10px;
-    }
-
-    .card-bottom {
-      bottom: 10px;
-      left: -10px;
-      animation-delay: -1.7s;
-      color: var(--neon-pink);
-      border-color: rgba(255, 0, 127, 0.3);
-    }
-
-    @keyframes floatBadge {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-12px); }
-    }
-
-    /* Marquee Strip */
-    .marquee-container {
-      width: 100%;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.02);
-      border-top: 1px solid var(--border-glass);
-      border-bottom: 1px solid var(--border-glass);
-      padding: 1rem 0;
-      margin: 3rem 0;
-      white-space: nowrap;
-    }
-
-    .marquee-track {
-      display: inline-block;
-      animation: marquee 16s linear infinite;
-    }
-
-    .marquee-item {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin: 0 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .marquee-item span {
-      color: var(--neon-cyan);
-      margin-left: 1.5rem;
-    }
-
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* Features Section */
-    .section {
-      padding: 5rem 0;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      padding: 1.8rem;
-      border-radius: 16px;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .feature-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--neon-cyan), transparent);
-      opacity: 0.5;
-    }
-
-    .feature-card:nth-child(2)::before {
-      background: linear-gradient(90deg, var(--neon-purple), transparent);
-    }
-
-    .feature-card:nth-child(3)::before {
-      background: linear-gradient(90deg, var(--neon-pink), transparent);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(0, 245, 255, 0.4);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      display: inline-block;
-    }
-
-    .card-title {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      margin-bottom: 0.6rem;
-      color: var(--text-main);
-    }
-
-    .card-text {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* Showcase Section */
-    .showcase {
-      text-align: center;
-      background: radial-gradient(circle at center, rgba(157, 78, 221, 0.08) 0%, transparent 70%);
-      border-radius: 24px;
-      border: 1px solid var(--border-glass);
-      padding: 3rem 1.5rem;
-      margin: 2rem 0;
-    }
-
-    .showcase-visual {
-      position: relative;
-      width: 220px;
-      height: 220px;
-      margin: 1.5rem auto 2.5rem;
-    }
-
-    .abstract-core {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 90px;
-      height: 90px;
-      transform: translate(-50%, -50%) rotate(45deg);
-      background: linear-gradient(135deg, var(--neon-pink), var(--neon-orange));
-      box-shadow: 0 0 35px var(--neon-pink);
-      border-radius: 16px;
-      animation: rotateCore 9s ease-in-out infinite alternate;
-    }
-
-    @keyframes rotateCore {
-      0% { transform: translate(-50%, -50%) rotate(45deg) scale(0.9); }
-      100% { transform: translate(-50%, -50%) rotate(225deg) scale(1.1); }
-    }
-
-    /* CTA Section */
-    .cta-banner {
-      text-align: center;
-      padding: 5rem 1.5rem;
-    }
-
-    .cta-banner h2 {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border-glass);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    footer p {
-      margin-bottom: 0.5rem;
-    }
-
-    /* Scroll Reveal Utility Classes */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Desktop Media Queries */
-    @media (min-width: 768px) {
-      header {
-        padding: 1.2rem 3rem;
-      }
-
-      .nav-links {
-        display: flex;
-      }
-
-      .hero-title {
-        font-size: 4rem;
-      }
-
-      .cta-group {
-        flex-direction: row;
-        max-width: 440px;
-      }
-
-      .hero-visual {
-        width: 360px;
-        height: 360px;
-      }
-
-      .orb-glow {
-        width: 170px;
-        height: 170px;
-      }
-
-      .ring-1 {
-        width: 250px;
-        height: 250px;
-      }
-
-      .ring-2 {
-        width: 320px;
-        height: 320px;
-      }
-
-      .features-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-
-      .section-title {
-        font-size: 2.4rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NEONVERSE — Enter the Extraordinary</title>
+<style>
+  :root {
+    --cyan: #00e5ff;
+    --purple: #a855f7;
+    --pink: #ff2ec4;
+    --orange: #ff8a00;
+    --bg: #05010f;
+    --text: #e8e6ff;
+    --muted: #a09cc4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ---------- Animated background ---------- */
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(0,229,255,0.15), transparent 40%),
+      radial-gradient(circle at 80% 30%, rgba(168,85,247,0.18), transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(255,46,196,0.15), transparent 45%),
+      radial-gradient(circle at 90% 90%, rgba(255,138,0,0.12), transparent 40%);
+    animation: bgShift 18s ease-in-out infinite alternate;
+  }
+  @keyframes bgShift {
+    0%   { transform: scale(1) translate(0,0); }
+    100% { transform: scale(1.15) translate(-2%, 2%); }
+  }
+
+  /* ---------- Navbar ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 6vw;
+    backdrop-filter: blur(12px);
+    background: rgba(5, 1, 15, 0.6);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta {
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1px solid var(--purple);
+    background: transparent;
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover {
+    background: var(--purple);
+    box-shadow: 0 0 20px var(--purple);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 92vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    padding: 60px 6vw;
+    position: relative;
+  }
+  .hero-text h1 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 1px;
+  }
+  .gradient-text {
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink), var(--orange));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradMove 6s ease infinite;
+  }
+  @keyframes gradMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .hero-text p {
+    color: var(--muted);
+    margin: 22px 0 30px;
+    font-size: 1.05rem;
+    max-width: 520px;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 26px;
+    border-radius: 40px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    color: #05010f;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(0,229,255,0.6);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .btn-ghost:hover {
+    border-color: var(--pink);
+    box-shadow: 0 0 20px rgba(255,46,196,0.4);
+    transform: translateY(-3px);
+  }
+
+  /* ---------- Hero visual (orb) ---------- */
+  .hero-visual {
+    position: relative;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .orb {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--cyan) 25%, var(--purple) 55%, var(--pink) 80%, transparent 100%);
+    box-shadow: 0 0 60px var(--cyan), 0 0 120px var(--purple);
+    animation: orbPulse 4s ease-in-out infinite;
+    transition: transform 0.2s ease-out;
+  }
+  @keyframes orbPulse {
+    0%,100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.08); filter: brightness(1.25); }
+  }
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    background: conic-gradient(from 0deg, var(--cyan), transparent, var(--pink), transparent, var(--cyan)) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: spin 8s linear infinite;
+  }
+  .ring-1 { width: 280px; height: 280px; opacity: 0.7; }
+  .ring-2 { width: 340px; height: 340px; animation-duration: 12s; animation-direction: reverse; opacity: 0.5; }
+  .ring-3 { width: 400px; height: 400px; animation-duration: 16s; opacity: 0.35; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .float-card {
+    position: absolute;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: rgba(20, 10, 40, 0.7);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    backdrop-filter: blur(8px);
+    font-size: 0.8rem;
+    color: var(--text);
+    animation: floatY 5s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .float-card.fc1 { top: 12%; left: 0; animation-delay: 0s; }
+  .float-card.fc2 { bottom: 14%; right: 0; animation-delay: 1.5s; }
+  .float-card.fc3 { top: 40%; right: -5%; animation-delay: 3s; }
+  @keyframes floatY {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+    animation: particleFloat 6s ease-in-out infinite;
+  }
+  @keyframes particleFloat {
+    0%,100% { transform: translate(0,0); opacity: 0.4; }
+    50% { transform: translate(10px,-20px); opacity: 1; }
+  }
+
+  /* ---------- Marquee ---------- */
+  .marquee {
+    overflow: hidden;
+    padding: 18px 0;
+    border-top: 1px solid rgba(168,85,247,0.15);
+    border-bottom: 1px solid rgba(168,85,247,0.15);
+    background: rgba(10, 4, 25, 0.5);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: scrollX 20s linear infinite;
+    font-weight: 700;
+    letter-spacing: 4px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .marquee-track span { color: var(--cyan); }
+  @keyframes scrollX {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 90px 6vw; }
+
+  .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .section-sub {
+    color: var(--muted);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px;
+  }
+
+  /* ---------- Features ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 26px;
+  }
+  .card {
+    padding: 32px 26px;
+    border-radius: 20px;
+    background: rgba(20, 10, 40, 0.55);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(168,85,247,0.25), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--cyan);
+    box-shadow: 0 20px 50px rgba(0,229,255,0.15);
+  }
+  .card:hover::before { opacity: 1; }
+  .card-icon {
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #05010f;
+    font-weight: 800;
+  }
+  .card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ---------- Showcase ---------- */
+  .showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+  .showcase-visual {
+    position: relative;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .showcase-center {
+    width: 120px; height: 120px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--cyan), var(--purple), var(--pink));
+    box-shadow: 0 0 50px rgba(168,85,247,0.6);
+    animation: orbPulse 5s ease-in-out infinite;
+  }
+  .showcase-visual .ring { position: absolute; }
+  .showcase h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+  .showcase p { color: var(--muted); margin-bottom: 28px; }
+
+  /* ---------- Final CTA ---------- */
+  .cta-final {
+    text-align: center;
+    padding: 110px 6vw;
+  }
+  .cta-final h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 18px;
+  }
+  .cta-final p { color: var(--muted); margin-bottom: 34px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 50px 6vw 30px;
+    border-top: 1px solid rgba(168,85,247,0.15);
+    text-align: center;
+  }
+  footer .logo { font-size: 1.1rem; }
+  footer p { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 40px; }
+    .hero-text p { margin-left: auto; margin-right: auto; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { height: 340px; margin-top: 20px; }
+    .ring-3 { width: 320px; height: 320px; }
+    .ring-2 { width: 270px; height: 270px; }
+    .ring-1 { width: 220px; height: 220px; }
+    .orb { width: 160px; height: 160px; }
+    .showcase { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .float-card.fc3 { right: 0; }
+  }
+</style>
 </head>
 <body>
+<div class="bg-glow"></div>
 
-  <div class="ambient-glow"></div>
+<!-- Navbar -->
+<nav>
+  <div class="logo">NEONVERSE</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#experience">Experience</a></li>
+  </ul>
+  <button class="nav-cta">Discover</button>
+</nav>
 
-  <!-- Header -->
-  <header>
-    <div class="brand-logo">Neonverse</div>
-    <ul class="nav-links">
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#showcase">Experience</a></li>
-    </ul>
-    <button class="btn-nav" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Discover</button>
-  </header>
-
-  <!-- Hero Section -->
-  <main>
-    <section class="hero" id="hero">
-      <div class="badge">Next Generation Experience</div>
-      <h1 class="hero-title">
-        Enter The <span class="gradient-text">Extraordinary</span>
-      </h1>
-      <p class="hero-desc">
-        A futuristic digital space powered by seamless animations, cinematic neon glows, and interactive motion mechanics.
-      </p>
-
-      <div class="cta-group">
-        <a href="#showcase" class="btn-primary">Explore Experience</a>
-        <a href="#features" class="btn-secondary">Discover More</a>
-      </div>
-
-      <!-- Center Orb Stage -->
-      <div class="hero-visual" id="orbVisual">
-        <div class="ring ring-1"></div>
-        <div class="ring ring-2"></div>
-        <div class="orb-glow"></div>
-        <div class="floating-card card-top">CYBER CORE 01</div>
-        <div class="floating-card card-bottom">REALTIME FX</div>
-      </div>
-    </section>
-
-    <!-- Marquee Banner -->
-    <div class="marquee-container">
-      <div class="marquee-track">
-        <span class="marquee-item">Creativity <span>✦</span></span>
-        <span class="marquee-item">Immersion <span>✦</span></span>
-        <span class="marquee-item">Imagination <span>✦</span></span>
-        <span class="marquee-item">Innovation <span>✦</span></span>
-        <span class="marquee-item">Experience <span>✦</span></span>
-        <span class="marquee-item">Creativity <span>✦</span></span>
-        <span class="marquee-item">Immersion <span>✦</span></span>
-        <span class="marquee-item">Imagination <span>✦</span></span>
-        <span class="marquee-item">Innovation <span>✦</span></span>
-        <span class="marquee-item">Experience <span>✦</span></span>
-      </div>
+<!-- Hero -->
+<header class="hero" id="home">
+  <div class="hero-text reveal">
+    <h1>ENTER THE <span class="gradient-text">EXTRAORDINARY.</span></h1>
+    <p>Step into a cinematic digital universe where motion, colour and light collide to create an immersive experience beyond reality.</p>
+    <div class="hero-btns">
+      <a href="#experience" class="btn btn-primary">Explore Experience</a>
+      <a href="#features" class="btn btn-ghost">Discover More</a>
     </div>
+  </div>
 
-    <!-- Features Section -->
-    <section class="section" id="features">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="badge">Architecture</div>
-          <h2 class="section-title">Built For The Modern Web</h2>
-        </div>
+  <div class="hero-visual reveal">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="orb" id="orb"></div>
+    <div class="float-card fc1">⚡ Real-time Motion</div>
+    <div class="float-card fc2">🌌 Infinite Depth</div>
+    <div class="float-card fc3">✨ Neon Energy</div>
+    <div class="particle" style="top:20%; left:30%;"></div>
+    <div class="particle" style="top:70%; left:20%; animation-delay:1s;"></div>
+    <div class="particle" style="top:60%; left:80%; animation-delay:2s;"></div>
+    <div class="particle" style="top:30%; left:70%; animation-delay:3s;"></div>
+  </div>
+</header>
 
-        <div class="features-grid">
-          <div class="feature-card reveal">
-            <div class="card-icon">⚡</div>
-            <h3 class="card-title">Fluid Motion</h3>
-            <p class="card-text">Engineered with high performance hardware acceleration so animations stay crystal clear and ultra smooth on every device.</p>
-          </div>
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Creativity</span> • <span>Immersion</span> • <span>Imagination</span> • <span>Innovation</span> • <span>Experience</span> •
+    <span>Creativity</span> • <span>Immersion</span> • <span>Imagination</span> • <span>Innovation</span> • <span>Experience</span> •
+  </div>
+</div>
 
-          <div class="feature-card reveal">
-            <div class="card-icon">🌌</div>
-            <h3 class="card-title">Neon Universe</h3>
-            <p class="card-text">Rich futuristic gradients, glowing borders, and dark visual depth designed to capture attention immediately.</p>
-          </div>
-
-          <div class="feature-card reveal">
-            <div class="card-icon">✦</div>
-            <h3 class="card-title">Beyond Ordinary</h3>
-            <p class="card-text">Interactive hover responses and responsive glassmorphism cards that bring flat pages into 3D dimension.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Showcase Section -->
-    <section class="section" id="showcase">
-      <div class="container">
-        <div class="showcase reveal">
-          <div class="badge">Interactive Canvas</div>
-          <h2 class="section-title">Reality Is Only The Beginning</h2>
-          <p class="hero-desc" style="margin: 0 auto 1.5rem;">Experience dynamic depth crafted purely with modern CSS and JavaScript.</p>
-          
-          <div class="showcase-visual">
-            <div class="abstract-core"></div>
-            <div class="ring ring-1" style="width: 210px; height: 210px;"></div>
-          </div>
-
-          <button class="btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Enter The Universe</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="cta-banner reveal">
-      <div class="container">
-        <div class="badge">Get Started</div>
-        <h2>Step Into The Next Reality</h2>
-        <p class="hero-desc" style="margin: 0 auto 2rem;">Designed and engineered on GitHub with high-tier web animations.</p>
-        <button class="btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Return To Top</button>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p><strong>NEONVERSE</strong> &copy; 2026. All rights reserved.</p>
-      <p style="font-size: 0.75rem;">Crafted for cinematic web experiences.</p>
+<!-- Features -->
+<section id="features">
+  <h2 class="section-title reveal">Built for the <span class="gradient-text">Future</span></h2>
+  <p class="section-sub reveal">Every pixel engineered to feel alive. Every motion designed to pull you deeper.</p>
+  <div class="features">
+    <div class="card reveal">
+      <div class="card-icon">∞</div>
+      <h3>Fluid Motion</h3>
+      <p>Buttery-smooth animations that respond to every scroll and touch with cinematic precision.</p>
     </div>
-  </footer>
+    <div class="card reveal">
+      <div class="card-icon">◉</div>
+      <h3>Neon Universe</h3>
+      <p>Layered neon gradients and glowing depth that make the screen feel infinite.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">✦</div>
+      <h3>Beyond Ordinary</h3>
+      <p>A design language that breaks the rules of traditional websites and rewrites them.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- Scripts -->
-  <script>
-    // Smooth scroll reveal using Intersection Observer
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, {
-      threshold: 0.15
+<!-- Showcase -->
+<section id="experience">
+  <div class="showcase">
+    <div class="showcase-visual reveal">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="showcase-center"></div>
+    </div>
+    <div class="showcase-text reveal">
+      <h2>Reality is only <span class="gradient-text">the beginning.</span></h2>
+      <p>NEONVERSE is more than a website. It is a gateway into a new dimension of digital storytelling — where every scroll reveals something you have never seen before.</p>
+      <a href="#home" class="btn btn-primary">Enter the Universe</a>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="cta-final">
+  <h2 class="reveal">Ready to explore <span class="gradient-text">the unknown?</span></h2>
+  <p class="reveal">The universe is waiting. Take the first step.</p>
+  <a href="#home" class="btn btn-primary reveal">Back to the Beginning</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="logo">NEONVERSE</div>
+  <p>© 2026 NEONVERSE. All rights reserved.</p>
+  <p>Where reality ends, imagination begins.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
 
-    reveals.forEach(el => observer.observe(el));
-
-    // Subtle touch / pointer parallax for the hero orb
-    const orbStage = document.getElementById('orbVisual');
-    if (window.matchMedia('(pointer: fine)').matches && orbStage) {
-      window.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-        orbStage.style.transform = `translate(${x}px, ${y}px)`;
-      });
-    }
-  </script>
+  // Pointer-based orb movement (desktop only)
+  const orb = document.getElementById('orb');
+  if (window.matchMedia('(hover: hover)').matches) {
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      orb.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
+</script>
 </body>
-  </html>
-  
+</html>
